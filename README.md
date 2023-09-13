@@ -1,6 +1,8 @@
 # drag-and-drop
 This project is a Python-based drag and drop interaction system utilizing computer vision techniques. You can interact with digital elements and move them on your screen using hand gestures.
 
+![Hand Indexes](hand_indexes.png)
+
 ## Table of Contents
 
 - [Demo](#demo)
