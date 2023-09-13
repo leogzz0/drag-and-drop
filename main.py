@@ -27,7 +27,7 @@ class DragRect():
         w, h = self.size
         # check "x" and "y"
         # if the index finger tip is in the rectangle area
-        if cx - w // 2 < cursor[0] < cy + w // 2 and cy - h // 2 < cursor[1] < cy + h // 2:
+        if cx - w // 2 < cursor[0] < cx + w // 2 and cy - h // 2 < cursor[1] < cy + h // 2:
             # change color of the rectangle
             # colorRectangle = 0, 255, 255
             # change the position of the box
@@ -55,12 +55,24 @@ while True:
             for rect in rectList:
                 rect.update(cursor)
 
-    # Draw
+    ## Draw solid
+    # for rect in rectList:
+    #     cx, cy = rect.posCenter
+    #     w, h = rect.size
+    #     cv2.rectangle(img, (cx - w // 2, cy - h // 2), (cx + w // 2, cy + h // 2), colorRectangle, cv2.FILLED)
+    #     cvzone.cornerRect(img, (cx - w // 2, cy - h // 2, w, h), 20, rt=0)
+
+    ## Draw Transparency
+    imgNew = np.zeros_like(img, np.uint8)
     for rect in rectList:
         cx, cy = rect.posCenter
         w, h = rect.size
-        cv2.rectangle(img, (cx - w // 2, cy - h // 2), (cx + w // 2, cy + h // 2), colorRectangle, cv2.FILLED)
-        cvzone.cornerRect(img, (cx - w // 2, cy - h // 2, w, h), 20, rt=0)
+        cv2.rectangle(imgNew, (cx - w // 2, cy - h // 2), (cx + w // 2, cy + h // 2), colorRectangle, cv2.FILLED)
+        cvzone.cornerRect(imgNew, (cx - w // 2, cy - h // 2, w, h), 20, rt=0)
+    out = img.copy()
+    alpha = 0.5
+    mask = imgNew.astype(bool)
+    out[mask] = cv2.addWeighted(img, alpha, imgNew, 1 - alpha , 0)[mask]
 
-    cv2.imshow("Image", img)
+    cv2.imshow("Image", out)
     cv2.waitKey(1)
