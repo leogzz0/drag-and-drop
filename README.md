@@ -35,3 +35,4 @@ pip install cv2 cvzone mediapipe numpy
 ## Usage
 ## Contributing
 ## License
+This project is licensed under the [MIT License](https://github.com/leogzz0/drag-and-drop/blob/main/LICENSE.md). Feel free to use, modify, and distribute this project in accordance with the terms of the license.
