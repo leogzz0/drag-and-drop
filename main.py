@@ -1,6 +1,8 @@
 import cv2
 #import mediapipe
 from cvzone.HandTrackingModule import HandDetector
+import cvzone
+import numpy as np
 
 cap = cv2.VideoCapture(0)
 # width and height
@@ -31,7 +33,9 @@ class DragRect():
             # change the position of the box
             self.posCenter = cursor   
 
-rect = DragRect([150, 150])
+rectList = []
+for x in range(5):
+    rectList.append(DragRect([x * 250 + 150, 150]))
 
 while True:
     success, img = cap.read()
@@ -43,16 +47,20 @@ while True:
     lmList, _ = detector.findPosition(img)
     # if our finger is in the rectangle
     if lmList:
-        l, _, _ = detector.findDistance(8, 12, img)
+        l, _, _ = detector.findDistance(8, 12, img, draw=False)
         #print(l)
         if l < 30:
             cursor = lmList[8] # index finger tip landmark
             # call the update here
-            rect.update(cursor)
+            for rect in rectList:
+                rect.update(cursor)
 
     # Draw
-    cx, cy = rect.posCenter
-    w, h = rect.size
-    cv2.rectangle(img, (cx - w // 2, cy - h // 2), (cx + w // 2, cy + h // 2), colorRectangle, cv2.FILLED)
+    for rect in rectList:
+        cx, cy = rect.posCenter
+        w, h = rect.size
+        cv2.rectangle(img, (cx - w // 2, cy - h // 2), (cx + w // 2, cy + h // 2), colorRectangle, cv2.FILLED)
+        cvzone.cornerRect(img, (cx - w // 2, cy - h // 2, w, h), 20, rt=0)
+
     cv2.imshow("Image", img)
     cv2.waitKey(1)
