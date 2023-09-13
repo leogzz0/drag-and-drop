@@ -13,6 +13,25 @@ colorRectangle = (255, 0, 255)
 # position values
 cx, cy, w, h = 100, 100, 200, 200
 
+# class for multiple rectangle visualization
+class DragRect():
+    # initialization
+    def __init__(self, posCenter, size=[200, 200]):
+        self.posCenter = posCenter
+        self.size = size
+    
+    def update(self, cursor):
+        cx, cy = self.posCenter
+        w, h = self.size
+        # check "x" and "y"
+        # if the index finger tip is in the rectangle area
+        if cx - w // 2 < cursor[0] < cy + w // 2 and cy - h // 2 < cursor[1] < cy + h // 2:
+            # change color of the rectangle
+            # colorRectangle = 0, 255, 255
+            # change the position of the box
+            self.posCenter = cursor   
+
+rect = DragRect([150, 150])
 
 while True:
     success, img = cap.read()
@@ -27,15 +46,13 @@ while True:
         l, _, _ = detector.findDistance(8, 12, img)
         #print(l)
         if l < 30:
-            cursor = lmList[8]
-            # check "x" and "y"
-            if cx - w // 2 < cursor[0] < cy + w // 2 and cy - h // 2 < cursor[1] < cy + h // 2:
-                # change color of the rectangle
-                colorRectangle = 0, 255, 255
-                cx, cy = cursor
-            else:
-                colorRectangle = (255, 0, 255)
+            cursor = lmList[8] # index finger tip landmark
+            # call the update here
+            rect.update(cursor)
 
+    # Draw
+    cx, cy = rect.posCenter
+    w, h = rect.size
     cv2.rectangle(img, (cx - w // 2, cy - h // 2), (cx + w // 2, cy + h // 2), colorRectangle, cv2.FILLED)
     cv2.imshow("Image", img)
     cv2.waitKey(1)
