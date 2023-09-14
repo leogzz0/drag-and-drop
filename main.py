@@ -4,6 +4,23 @@ from cvzone.HandTrackingModule import HandDetector
 import cvzone
 import numpy as np
 
+# start screen backgorund
+start_screen = np.zeros((720, 1280, 3), dtype=np.uint8)
+
+# text instructions
+font = cv2.FONT_HERSHEY_SIMPLEX
+text = "Click Any Key to Start"
+text_size = cv2.getTextSize(text, font, 2, 5)[0]
+text_x = (start_screen.shape[1] - text_size[0]) // 2
+text_y = (start_screen.shape[0] + text_size[1]) // 2
+cv2.putText(start_screen, text, (text_x, text_y),
+            font, 2, (255, 255, 255), 5, cv2.LINE_AA)
+
+# display the start screen
+cv2.imshow("Start Screen", start_screen)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
 cap = cv2.VideoCapture(0)
 # width and height
 cap.set(3, 1280)
