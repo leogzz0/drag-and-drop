@@ -65,7 +65,7 @@ class StartScreen(QWidget):
                     # change the position of the box
                     self.posCenter = cursor
 
-        # create a list of DragRect objects (optimized)
+        # create a list of DragRect objects (optimized) <-
         rectList = [DragRect([x * 250 + 150, 150]) for x in range(5)]
 
         while True:
