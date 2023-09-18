@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QSplashScreen
 from PyQt5.QtCore import Qt
 import cv2
 import numpy as np
@@ -14,7 +14,8 @@ class StartScreen(QWidget):
     def initUI(self):
         # set properties for the start screen window
         self.setWindowTitle("Start Screen")
-        self.setGeometry(100, 100, 400, 200)
+        self.setGeometry(100, 100, 600, 400)
+        #self.setStyleSheet("background-image: hand_indexes.png;")
 
         # create layout for the start screen
         layout = QVBoxLayout()
@@ -22,9 +23,12 @@ class StartScreen(QWidget):
         # create a label and set its alignment
         label = QLabel("Click to Start")
         label.setAlignment(Qt.AlignCenter)
+        label.setStyleSheet("font-size: 24px; color: white;")
 
         # create a "Start" button and connect it to the start_application method
         start_button = QPushButton("Start")
+        start_button.setStyleSheet(
+            "background-color: #4CAF50; color: white; font-size: 18px;")
         start_button.clicked.connect(self.start_application)
 
         # add the label and button to the layout
