@@ -13,27 +13,56 @@ class StartScreen(QWidget):
 
     def initUI(self):
         # set properties for the start screen window
-        self.setWindowTitle("Start Screen")
-        self.setGeometry(100, 100, 600, 400)
+        self.setWindowTitle("Hand Tracker App")
+        self.setGeometry(100, 100, 1000, 800)
+        self.setStyleSheet(
+            "background: #1FAEFF;"
+            )
         #self.setStyleSheet("background-image: hand_indexes.png;")
 
         # create layout for the start screen
         layout = QVBoxLayout()
+        layout.setContentsMargins(50, 50, 50, 50)
+        layout.setSpacing(20)
 
-        # create a label and set its alignment
-        label = QLabel("Click to Start")
-        label.setAlignment(Qt.AlignCenter)
-        label.setStyleSheet("font-size: 24px; color: white;")
+        # title label
+        title_label = QLabel("Hand Tracker App")
+        title_label.setAlignment(Qt.AlignCenter)
+        title_label.setStyleSheet(
+            "font-size: 80px;"
+            "font-weight: bold;"
+            "color: white;"
+            )
+
+        # description label
+        description_label = QLabel(
+            "This application allows you to track your hands using advanced computer vision techniques. There would be 5 blocks to interact with. If you want to move them you should put your index finger and middle finger in peace sign on the block area, then you should join them to grab the block. Press 'Start' to begin, HAVE FUN!."
+            )
+        description_label.setAlignment(Qt.AlignCenter)
+        description_label.setWordWrap(True)
+        description_label.setStyleSheet(
+            "background-color: #0064BC;"
+            "border-radius: 15px;"
+            "font-size: 18px;" 
+            "color: white;"
+            )
 
         # create a "Start" button and connect it to the start_application method
         start_button = QPushButton("Start")
+        # start_button.setAlignment(Qt.AlignCenter)
+        start_button.setFixedSize(300, 50)
         start_button.setStyleSheet(
-            "background-color: #4CAF50; color: white; font-size: 18px;")
+            "background-color: #FF9100;"
+            "color: white;"
+            "font-size: 20px;"
+            "border-radius: 25px"
+            )
         start_button.clicked.connect(self.start_application)
 
-        # add the label and button to the layout
-        layout.addWidget(label)
-        layout.addWidget(start_button)
+        # add widgets
+        layout.addWidget(title_label)
+        layout.addWidget(description_label)
+        layout.addWidget(start_button, alignment=Qt.AlignCenter)
 
         # set the layout for the start screen
         self.setLayout(layout)
